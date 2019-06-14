@@ -25,6 +25,7 @@ namespace LOMG
             {
                 InGame ig = new InGame();
                 Application.Run(ig);
+                // test for github
             }
 
         }
