@@ -124,10 +124,6 @@ namespace LOMG
             {
                 Player_Jump = false;
             }
-            
-            
-
-            
 
         }
 
@@ -136,7 +132,8 @@ namespace LOMG
             if(pictureBox1.Location.Y < 261)
             {
                 Player_InAir = true;
-            } else
+            }
+            else
             {
                 Player_InAir = false;
             }
