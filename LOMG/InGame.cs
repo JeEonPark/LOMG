@@ -47,8 +47,7 @@ namespace LOMG
                 pb = LeftCharacter;
                 pb2 = RightCharacter;
                 labelClient.Visible = true;
-                Thread thread = new Thread(new ThreadStart(ServerStart));
-                thread.Start();
+                
             }
             else  //내가 클라이언트일 경우
             {
@@ -213,10 +212,11 @@ namespace LOMG
 
             byte[] getByte = new byte[1024];
             byte[] setByte = new byte[1024];
-            const int sPort = 20000;
+            const int sPort = 23456;
 
             string stringbyte = null;
-            IPAddress serverIP = IPAddress.Parse("127.0.0.1");
+            IPAddress serverIP = IPAddress.Parse("25.53.5.184");
+            Console.WriteLine("asdfasdf");
             IPEndPoint serverEndPoint = new IPEndPoint(serverIP, sPort);
             try
             {
@@ -227,7 +227,12 @@ namespace LOMG
 
                 if (Client.Connected)
                 {
-                    labelClient.Visible = false;
+
+
+                    labelClient.Invoke((MethodInvoker)delegate ()
+                    {
+                        labelClient.Visible = false;
+                    });
 
                     new Thread(delegate ()
                     {
@@ -244,7 +249,10 @@ namespace LOMG
                                 Point lc = new Point();
                                 lc.X = Convert.ToInt32(result[0]);
                                 lc.Y = Convert.ToInt32(result[1]);
-                                RightCharacter.Location = lc;
+                                RightCharacter.Invoke((MethodInvoker)delegate ()
+                                {
+                                    RightCharacter.Location = lc;
+                                });
 
                                 string sendData = LeftCharacter.Location.X + "$" + LeftCharacter.Location.Y;
                                 byte[] setsendData = Encoding.UTF7.GetBytes(sendData);
@@ -314,8 +322,8 @@ namespace LOMG
                         lc.Y = Convert.ToInt32(result[1]);
                         LeftCharacter.Location = lc;
 
-                    }
-                    getByte = new byte[1024];
+                        }
+                        getByte = new byte[1024];
 
                 }
 
@@ -336,6 +344,12 @@ namespace LOMG
                 Location = new Point(this.Left - (mousePoint.X - e.X),
                     this.Top - (mousePoint.Y - e.Y));
             }
+        }
+
+        private void Button1_Click(object sender, EventArgs e)
+        {
+            Thread thread = new Thread(ServerStart);
+            thread.Start();
         }
 
         public static int byteArrayDefrag(byte[] sData)
