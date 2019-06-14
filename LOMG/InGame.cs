@@ -47,7 +47,6 @@ namespace LOMG
                 pb = LeftCharacter;
                 pb2 = RightCharacter;
                 labelClient.Visible = true;
-                button1.Visible = true;
                 
             }
             else  //내가 클라이언트일 경우
@@ -55,7 +54,6 @@ namespace LOMG
                 pb2 = LeftCharacter;
                 pb = RightCharacter;
                 labelServerIP.Visible = true;
-                buttonConnect.Visible = true;
                 
             }
 
@@ -152,17 +150,14 @@ namespace LOMG
             }
         }
 
-        private void ButtonConnect_Click(object sender, EventArgs e)
-        {
-            Thread thread = new Thread(ClientStart);
-            thread.Start();
-        }
+       
 
         #endregion
 
         #region TimerTicks
         private void timer_moveAndjump_Tick(object sender, EventArgs e)
         {
+            
             if (Player_Right && pb.Right <= WorldFrame.Width - 3)
             {
                 pb.Left += Speed_Movement;
@@ -305,15 +300,8 @@ namespace LOMG
                     labelClient.Visible = false;
                 });
 
-                textBoxIP.Invoke((MethodInvoker)delegate ()
-                 {
-                    textBoxIP.Visible = false;
-                 });
 
-                buttonConnect.Invoke((MethodInvoker)delegate ()
-                 {
-                    buttonConnect.Visible = false;
-                 });
+                
             }
 
 
@@ -364,13 +352,26 @@ namespace LOMG
             }
         }
 
-        private void Button1_Click(object sender, EventArgs e)
+       
+
+        private void Testtick_Tick(object sender, EventArgs e)
+        {
+            Console.WriteLine("tick");
+            
+        }
+
+        private void ServerConnectButton_Click(object sender, EventArgs e)
         {
             Thread thread = new Thread(ServerStart);
             thread.Start();
 
-            button1.Visible = false;
 
+        }
+
+        private void ClientConnectButton_Click(object sender, EventArgs e)
+        {
+            Thread thread = new Thread(ClientStart);
+            thread.Start();
         }
 
         public static int byteArrayDefrag(byte[] sData)

@@ -34,13 +34,13 @@
             this.timer_moveAndjump = new System.Windows.Forms.Timer(this.components);
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.WorldFrame = new System.Windows.Forms.Panel();
-            this.buttonConnect = new System.Windows.Forms.Button();
             this.labelServerIP = new System.Windows.Forms.Label();
             this.labelClient = new System.Windows.Forms.Label();
             this.RightCharacter = new System.Windows.Forms.PictureBox();
             this.timer_gravity = new System.Windows.Forms.Timer(this.components);
-            this.button1 = new System.Windows.Forms.Button();
-            this.textBoxIP = new System.Windows.Forms.TextBox();
+            this.testtick = new System.Windows.Forms.Timer(this.components);
+            this.ServerConnectButton = new System.Windows.Forms.Label();
+            this.ClientConnectButton = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.LeftCharacter)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.WorldFrame.SuspendLayout();
@@ -77,9 +77,8 @@
             // WorldFrame
             // 
             this.WorldFrame.BackColor = System.Drawing.Color.SkyBlue;
-            this.WorldFrame.Controls.Add(this.button1);
-            this.WorldFrame.Controls.Add(this.buttonConnect);
-            this.WorldFrame.Controls.Add(this.textBoxIP);
+            this.WorldFrame.Controls.Add(this.ClientConnectButton);
+            this.WorldFrame.Controls.Add(this.ServerConnectButton);
             this.WorldFrame.Controls.Add(this.labelServerIP);
             this.WorldFrame.Controls.Add(this.labelClient);
             this.WorldFrame.Controls.Add(this.RightCharacter);
@@ -88,17 +87,6 @@
             this.WorldFrame.Name = "WorldFrame";
             this.WorldFrame.Size = new System.Drawing.Size(1404, 381);
             this.WorldFrame.TabIndex = 4;
-            // 
-            // buttonConnect
-            // 
-            this.buttonConnect.Location = new System.Drawing.Point(797, 131);
-            this.buttonConnect.Name = "buttonConnect";
-            this.buttonConnect.Size = new System.Drawing.Size(75, 23);
-            this.buttonConnect.TabIndex = 5;
-            this.buttonConnect.Text = "연결";
-            this.buttonConnect.UseVisualStyleBackColor = true;
-            this.buttonConnect.Visible = false;
-            this.buttonConnect.Click += new System.EventHandler(this.ButtonConnect_Click);
             // 
             // labelServerIP
             // 
@@ -138,24 +126,31 @@
             this.timer_gravity.Interval = 1;
             this.timer_gravity.Tick += new System.EventHandler(this.Timer_gravity_Tick);
             // 
-            // button1
+            // testtick
             // 
-            this.button1.Location = new System.Drawing.Point(797, 48);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 6;
-            this.button1.Text = "연결";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Visible = false;
-            this.button1.Click += new System.EventHandler(this.Button1_Click);
+            this.testtick.Enabled = true;
+            this.testtick.Interval = 1000;
+            this.testtick.Tick += new System.EventHandler(this.Testtick_Tick);
             // 
-            // textBoxIP
+            // ServerConnectButton
             // 
-            this.textBoxIP.Location = new System.Drawing.Point(617, 133);
-            this.textBoxIP.Name = "textBoxIP";
-            this.textBoxIP.Size = new System.Drawing.Size(174, 21);
-            this.textBoxIP.TabIndex = 4;
-            this.textBoxIP.Visible = false;
+            this.ServerConnectButton.AutoSize = true;
+            this.ServerConnectButton.Location = new System.Drawing.Point(851, 56);
+            this.ServerConnectButton.Name = "ServerConnectButton";
+            this.ServerConnectButton.Size = new System.Drawing.Size(38, 12);
+            this.ServerConnectButton.TabIndex = 4;
+            this.ServerConnectButton.Text = "label1";
+            this.ServerConnectButton.Click += new System.EventHandler(this.ServerConnectButton_Click);
+            // 
+            // ClientConnectButton
+            // 
+            this.ClientConnectButton.AutoSize = true;
+            this.ClientConnectButton.Location = new System.Drawing.Point(812, 138);
+            this.ClientConnectButton.Name = "ClientConnectButton";
+            this.ClientConnectButton.Size = new System.Drawing.Size(38, 12);
+            this.ClientConnectButton.TabIndex = 5;
+            this.ClientConnectButton.Text = "label2";
+            this.ClientConnectButton.Click += new System.EventHandler(this.ClientConnectButton_Click);
             // 
             // InGame
             // 
@@ -189,11 +184,11 @@
         private System.Windows.Forms.Panel WorldFrame;
         private System.Windows.Forms.Timer timer_gravity;
         private System.Windows.Forms.PictureBox RightCharacter;
-        private System.Windows.Forms.Button buttonConnect;
         private System.Windows.Forms.Label labelServerIP;
         private System.Windows.Forms.Label labelClient;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.TextBox textBoxIP;
+        private System.Windows.Forms.Timer testtick;
+        private System.Windows.Forms.Label ClientConnectButton;
+        private System.Windows.Forms.Label ServerConnectButton;
     }
 }
 
