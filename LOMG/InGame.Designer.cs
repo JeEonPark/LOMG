@@ -135,21 +135,25 @@
             // ServerConnectButton
             // 
             this.ServerConnectButton.AutoSize = true;
-            this.ServerConnectButton.Location = new System.Drawing.Point(851, 56);
+            this.ServerConnectButton.Font = new System.Drawing.Font("굴림", 14F, System.Drawing.FontStyle.Bold);
+            this.ServerConnectButton.Location = new System.Drawing.Point(795, 53);
             this.ServerConnectButton.Name = "ServerConnectButton";
-            this.ServerConnectButton.Size = new System.Drawing.Size(38, 12);
+            this.ServerConnectButton.Size = new System.Drawing.Size(89, 19);
             this.ServerConnectButton.TabIndex = 4;
-            this.ServerConnectButton.Text = "label1";
+            this.ServerConnectButton.Text = "연결하기";
+            this.ServerConnectButton.Visible = false;
             this.ServerConnectButton.Click += new System.EventHandler(this.ServerConnectButton_Click);
             // 
             // ClientConnectButton
             // 
             this.ClientConnectButton.AutoSize = true;
-            this.ClientConnectButton.Location = new System.Drawing.Point(812, 138);
+            this.ClientConnectButton.Font = new System.Drawing.Font("굴림", 14F, System.Drawing.FontStyle.Bold);
+            this.ClientConnectButton.Location = new System.Drawing.Point(795, 132);
             this.ClientConnectButton.Name = "ClientConnectButton";
-            this.ClientConnectButton.Size = new System.Drawing.Size(38, 12);
+            this.ClientConnectButton.Size = new System.Drawing.Size(89, 19);
             this.ClientConnectButton.TabIndex = 5;
-            this.ClientConnectButton.Text = "label2";
+            this.ClientConnectButton.Text = "연결하기";
+            this.ClientConnectButton.Visible = false;
             this.ClientConnectButton.Click += new System.EventHandler(this.ClientConnectButton_Click);
             // 
             // InGame

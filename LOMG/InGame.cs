@@ -47,6 +47,7 @@ namespace LOMG
                 pb = LeftCharacter;
                 pb2 = RightCharacter;
                 labelClient.Visible = true;
+                ServerConnectButton.Visible = true;
                 
             }
             else  //내가 클라이언트일 경우
@@ -54,7 +55,7 @@ namespace LOMG
                 pb2 = LeftCharacter;
                 pb = RightCharacter;
                 labelServerIP.Visible = true;
-                
+                ClientConnectButton.Visible = true;
             }
 
 
@@ -199,6 +200,24 @@ namespace LOMG
 
         #endregion
 
+        #region voids
+        private void ServerConnectButton_Click(object sender, EventArgs e)
+        {
+            Thread thread = new Thread(ServerStart);
+            thread.Start();
+            ServerConnectButton.Visible = false;
+
+        }
+
+        private void ClientConnectButton_Click(object sender, EventArgs e)
+        {
+            Thread thread = new Thread(ClientStart);
+            thread.Start();
+            ClientConnectButton.Visible = false;
+
+
+        }
+        #endregion
 
         Socket Server, Client;
         #region Server
@@ -329,7 +348,7 @@ namespace LOMG
                 }
                 getByte = new byte[1024];
 
-                Thread.Sleep(1);
+                Thread.Sleep(10);
 
             }
 
@@ -360,19 +379,7 @@ namespace LOMG
             
         }
 
-        private void ServerConnectButton_Click(object sender, EventArgs e)
-        {
-            Thread thread = new Thread(ServerStart);
-            thread.Start();
-
-
-        }
-
-        private void ClientConnectButton_Click(object sender, EventArgs e)
-        {
-            Thread thread = new Thread(ClientStart);
-            thread.Start();
-        }
+        
 
         public static int byteArrayDefrag(byte[] sData)
         {
