@@ -20,15 +20,11 @@ namespace LOMG
 
         #region Vars
         private int Speed_Movement = 3;
-        int Gravity = 20;
-        int Force = 0;
+        private int Gravity = 20;
+        private int Force = 0;
 
         private bool Player_Left = false;
         private bool Player_Right = false;
-        bool Player_Jump = false;
-        //sdsdsdsdsdsddsdsd
-
-        //asdfasdf
 
         #endregion
 
@@ -48,6 +44,17 @@ namespace LOMG
             get { return Player_Right; }
             set { Player_Right = value; }
         }
+        public int GSGravity
+        {
+            get { return Gravity; }
+            set { Gravity = value; }
+        }
+        public int GSForce
+        {
+            get { return Force; }
+            set { Force = value; }
+        }
+       
         #endregion
 
         #region Keyboard
