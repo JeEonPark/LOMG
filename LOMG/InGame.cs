@@ -60,6 +60,31 @@ namespace LOMG
             get { return Force; }
             set { Force = value; }
         }
+        public int GSSpeed_Jump
+        {
+            get { return Speed_Jump; }
+            set { Speed_Jump = value; }
+        }
+        public int GSSpeed_Fail
+        {
+            get { return Speed_Fall; }
+            set { Speed_Fall = value; }
+        }
+        public bool GSPlayer_Jump
+        {
+            get { return Player_Jump; }
+            set { Player_Jump = value; }
+        }
+        public bool GSPlayer_Jumping
+        {
+            get { return Player_Jumping; }
+            set { Player_Jumping = value; }
+        }
+        public bool GSPlayer_InAir
+        {
+            get { return Player_InAir; }
+            set { Player_InAir = value; }
+        }
        
         #endregion
 
