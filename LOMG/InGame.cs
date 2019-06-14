@@ -329,7 +329,7 @@ namespace LOMG
                 }
                 getByte = new byte[1024];
 
-                Thread.Sleep(20);
+                Thread.Sleep(15);
 
             }
 
