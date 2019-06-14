@@ -47,6 +47,7 @@ namespace LOMG
                 pb = LeftCharacter;
                 pb2 = RightCharacter;
                 labelClient.Visible = true;
+                button1.Visible = true;
                 
             }
             else  //내가 클라이언트일 경우
@@ -304,6 +305,10 @@ namespace LOMG
                     labelClient.Visible = false;
                 });
 
+                textBoxIP.Invoke((MethodInvoker)delegate ()
+                 {
+                    textBoxIP.Visible = false;
+                 });
 
                 buttonConnect.Invoke((MethodInvoker)delegate ()
                  {
@@ -363,6 +368,9 @@ namespace LOMG
         {
             Thread thread = new Thread(ServerStart);
             thread.Start();
+
+            button1.Visible = false;
+
         }
 
         public static int byteArrayDefrag(byte[] sData)

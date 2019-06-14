@@ -40,6 +40,7 @@
             this.RightCharacter = new System.Windows.Forms.PictureBox();
             this.timer_gravity = new System.Windows.Forms.Timer(this.components);
             this.button1 = new System.Windows.Forms.Button();
+            this.textBoxIP = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.LeftCharacter)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.WorldFrame.SuspendLayout();
@@ -78,6 +79,7 @@
             this.WorldFrame.BackColor = System.Drawing.Color.SkyBlue;
             this.WorldFrame.Controls.Add(this.button1);
             this.WorldFrame.Controls.Add(this.buttonConnect);
+            this.WorldFrame.Controls.Add(this.textBoxIP);
             this.WorldFrame.Controls.Add(this.labelServerIP);
             this.WorldFrame.Controls.Add(this.labelClient);
             this.WorldFrame.Controls.Add(this.RightCharacter);
@@ -144,7 +146,16 @@
             this.button1.TabIndex = 6;
             this.button1.Text = "연결";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Visible = false;
             this.button1.Click += new System.EventHandler(this.Button1_Click);
+            // 
+            // textBoxIP
+            // 
+            this.textBoxIP.Location = new System.Drawing.Point(617, 133);
+            this.textBoxIP.Name = "textBoxIP";
+            this.textBoxIP.Size = new System.Drawing.Size(174, 21);
+            this.textBoxIP.TabIndex = 4;
+            this.textBoxIP.Visible = false;
             // 
             // InGame
             // 
@@ -182,6 +193,7 @@
         private System.Windows.Forms.Label labelServerIP;
         private System.Windows.Forms.Label labelClient;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TextBox textBoxIP;
     }
 }
 
