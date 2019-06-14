@@ -142,6 +142,7 @@
             this.buttonConnect.Text = "연결";
             this.buttonConnect.UseVisualStyleBackColor = true;
             this.buttonConnect.Visible = false;
+            this.buttonConnect.Click += new System.EventHandler(this.ButtonConnect_Click);
             // 
             // InGame
             // 

@@ -47,6 +47,7 @@ namespace LOMG
                 pb = LeftCharacter;
                 pb2 = RightCharacter;
                 labelClient.Visible = true;
+                ServerStart();
             }
             else  //내가 클라이언트일 경우
             {
@@ -148,6 +149,11 @@ namespace LOMG
                     break;
 
             }
+        }
+
+        private void ButtonConnect_Click(object sender, EventArgs e)
+        {
+            ClientStart();
         }
 
         #endregion
@@ -316,6 +322,7 @@ namespace LOMG
 
         }
 
+        
 
         public static int byteArrayDefrag(byte[] sData)
         {
