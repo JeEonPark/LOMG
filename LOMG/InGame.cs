@@ -281,7 +281,7 @@ namespace LOMG
             string sendstring = null;
             string getstring = null;
 
-            IPAddress serverIP = IPAddress.Parse(textBoxIP.ToString());
+            IPAddress serverIP = IPAddress.Parse("175.195.53.19");
             IPEndPoint serverEndPoint = new IPEndPoint(serverIP, sPort);
 
             socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
@@ -297,7 +297,7 @@ namespace LOMG
                 {
                     while (true)
                     {
-                        string sendstirng = RightCharacter.Location.X + "$" + RightCharacter.Location.Y;
+                        sendstring = RightCharacter.Location.X + "$" + RightCharacter.Location.Y;
                         if(sendstring != String.Empty)
                         {
                             int getValueLength = 0;
