@@ -22,13 +22,15 @@ namespace LOMG
         private int Speed_Movement = 3;
         int Gravity = 20;
         int Force = 0;
+        int Speed_Jump = 3;
+        int Speed_Fall = 3;
 
         private bool Player_Left = false;
         private bool Player_Right = false;
         bool Player_Jump = false;
-        //sdsdsdsdsdsddsdsd
-
-        //asdfasdf
+        bool Player_Jumping = false;
+        bool Player_InAir = false;
+        
 
         #endregion
 
@@ -75,6 +77,13 @@ namespace LOMG
                     Player_Right = false;
                     break;
                 case Keys.Space:
+                    if (!Player_Jump && !Player_InAir)
+                    {
+                        pictureBox1.Top -= Speed_Jump;
+                        Force = Gravity;
+                        Player_Jump = true;
+                    }
+                    break;
 
             }
         }
@@ -93,8 +102,43 @@ namespace LOMG
                 pictureBox1.Left -= Speed_Movement;
             }
             label1.Text = pictureBox1.Left.ToString();
+
+
+            if (Force > 0)
+            {
+                Force--;
+                pictureBox1.Top -= Speed_Jump;
+            }
+            else
+            {
+                Player_Jump = false;
+            }
+            
+            
+
+            
+
+        }
+
+        private void Timer_gravity_Tick(object sender, EventArgs e)
+        {
+            if(pictureBox1.Location.Y < 261)
+            {
+                Player_InAir = true;
+            } else
+            {
+                Player_InAir = false;
+            }
+
+            if (!Player_Jump && pictureBox1.Location.Y < 261 && Player_InAir)
+            {
+                pictureBox1.Top += Speed_Fall;
+            }
+            
         }
 
         #endregion
+
+
     }
 }

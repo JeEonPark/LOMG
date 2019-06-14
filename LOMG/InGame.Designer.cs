@@ -35,6 +35,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.WorldFrame = new System.Windows.Forms.Panel();
+            this.timer_gravity = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.WorldFrame.SuspendLayout();
@@ -85,6 +86,12 @@
             this.WorldFrame.Size = new System.Drawing.Size(1404, 381);
             this.WorldFrame.TabIndex = 4;
             // 
+            // timer_gravity
+            // 
+            this.timer_gravity.Enabled = true;
+            this.timer_gravity.Interval = 1;
+            this.timer_gravity.Tick += new System.EventHandler(this.Timer_gravity_Tick);
+            // 
             // InGame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -114,6 +121,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.Panel WorldFrame;
+        private System.Windows.Forms.Timer timer_gravity;
     }
 }
 
