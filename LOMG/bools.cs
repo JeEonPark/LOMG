@@ -16,5 +16,14 @@ namespace LOMG
             set { igOn = value; }
         }
 
+        private static bool amIServer;
+
+        public bool GSamIServer
+        {
+            get { return amIServer; }
+            set { amIServer = value; }
+        }
+
+
     }
 }

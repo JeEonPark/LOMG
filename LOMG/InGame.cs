@@ -4,7 +4,10 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net;
+using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -12,27 +15,50 @@ namespace LOMG
 {
     public partial class InGame : Form
     {
-        public InGame()
-        {
-            InitializeComponent();
 
-        }
 
         #region Vars
         private int Speed_Movement = 3;
         private int Gravity = 20;
         private int Force = 0;
-        int Speed_Jump = 3;
-        int Speed_Fall = 3;
+        private int Speed_Jump = 3;
+        private int Speed_Fall = 3;
 
         private bool Player_Left = false;
         private bool Player_Right = false;
-        bool Player_Jump = false;
-        bool Player_Jumping = false;
-        bool Player_InAir = false;
-        
+        private bool Player_Jump = false;
+        private bool Player_Jumping = false;
+        private bool Player_InAir = false;
+        bool GameStart = false;
+
+        PictureBox pb;
+        PictureBox pb2;
+
 
         #endregion
+
+        public InGame()
+        {
+            InitializeComponent();
+
+            bools b = new bools();
+            if (b.GSamIServer) //내가 서버일경우
+            {
+                pb = LeftCharacter;
+                pb2 = RightCharacter;
+                labelClient.Visible = true;
+            }
+            else  //내가 클라이언트일 경우
+            {
+                pb2 = LeftCharacter;
+                pb = RightCharacter;
+                labelServerIP.Visible = true;
+                buttonConnect.Visible = true;
+                textBoxIP.Visible = true;
+            }
+
+
+        }
 
         #region GetSet
         public int GSSpeed_Movement
@@ -85,7 +111,7 @@ namespace LOMG
             get { return Player_InAir; }
             set { Player_InAir = value; }
         }
-       
+
         #endregion
 
         #region Keyboard
@@ -115,7 +141,7 @@ namespace LOMG
                 case Keys.Space:
                     if (!Player_Jump && !Player_InAir)
                     {
-                        pictureBox1.Top -= Speed_Jump;
+                        pb.Top -= Speed_Jump;
                         Force = Gravity;
                         Player_Jump = true;
                     }
@@ -129,21 +155,19 @@ namespace LOMG
         #region TimerTicks
         private void timer_moveAndjump_Tick(object sender, EventArgs e)
         {
-            if (Player_Right && pictureBox1.Right <= WorldFrame.Width - 3)
+            if (Player_Right && pb.Right <= WorldFrame.Width - 3)
             {
-                pictureBox1.Left += Speed_Movement;
+                pb.Left += Speed_Movement;
             }
-            if (Player_Left && pictureBox1.Location.X >= 3)
+            if (Player_Left && pb.Location.X >= 3)
             {
-                pictureBox1.Left -= Speed_Movement;
+                pb.Left -= Speed_Movement;
             }
-            label1.Text = pictureBox1.Left.ToString();
-
 
             if (Force > 0)
             {
                 Force--;
-                pictureBox1.Top -= Speed_Jump;
+                pb.Top -= Speed_Jump;
             }
             else
             {
@@ -154,7 +178,7 @@ namespace LOMG
 
         private void Timer_gravity_Tick(object sender, EventArgs e)
         {
-            if(pictureBox1.Location.Y < 261)
+            if (pb.Location.Y < 261)
             {
                 Player_InAir = true;
             }
@@ -163,15 +187,150 @@ namespace LOMG
                 Player_InAir = false;
             }
 
-            if (!Player_Jump && pictureBox1.Location.Y < 261 && Player_InAir)
+            if (!Player_Jump && pb.Location.Y < 261 && Player_InAir)
             {
-                pictureBox1.Top += Speed_Fall;
+                pb.Top += Speed_Fall;
             }
-            
+
         }
 
         #endregion
 
+
+        Socket Server, Client;
+        #region Server
+        private void ServerStart() //내가 서버일경우
+        {
+
+            byte[] getByte = new byte[1024];
+            byte[] setByte = new byte[1024];
+            const int sPort = 20000;
+
+            string stringbyte = null;
+            IPAddress serverIP = IPAddress.Parse("172.0.0.1");
+            IPEndPoint serverEndPoint = new IPEndPoint(serverIP, sPort);
+            try
+            {
+                Server = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                Server.Bind(serverEndPoint);
+                Server.Listen(10);
+                Client = Server.Accept();
+
+                if (Client.Connected)
+                {
+                    labelClient.Visible = false;
+
+                    new Thread(delegate ()
+                    {
+                        while (true)
+                        {
+                            Client.Receive(getByte, 0, getByte.Length, SocketFlags.None);
+                            stringbyte = Encoding.UTF7.GetString(getByte);
+                            if (stringbyte != String.Empty)
+                            {
+                                int getValueLength = 0;
+                                getValueLength = byteArrayDefrag(getByte);
+                                stringbyte = Encoding.UTF7.GetString(getByte, 0, getValueLength + 1);
+                                string[] result = stringbyte.Split(new char[] { '$' });
+                                Point lc = new Point();
+                                lc.X = Convert.ToInt32(result[0]);
+                                lc.Y = Convert.ToInt32(result[1]);
+                                RightCharacter.Location = lc;
+
+                                string sendData = LeftCharacter.Location.X + "$" + LeftCharacter.Location.Y;
+                                byte[] setsendData = Encoding.UTF7.GetBytes(sendData);
+                                Client.Send(setsendData, 0, setsendData.Length, SocketFlags.None);
+                            }
+                            getByte = new byte[1024];
+                            setByte = new byte[1024];
+
+                        }
+                    }).Start();
+
+                }
+
+            }
+            catch (System.Net.Sockets.SocketException socketEx)
+            {
+                Console.WriteLine("[Error]:{0}", socketEx.Message);
+            }
+            catch (System.Exception commonEx)
+            {
+                Console.WriteLine("[Error]:{0}", commonEx.Message);
+            }
+            finally
+            {
+                Server.Close();
+                Client.Close();
+            }
+        }
+
+        Socket socket;
+        private void ClientStart()//내가 클라이언트일 경우
+        {
+            byte[] getByte = new byte[1024];
+            byte[] setByte = new byte[1024];
+            const int sPort = 20000;
+
+            string sendstring = null;
+            string getstring = null;
+
+            IPAddress serverIP = IPAddress.Parse(textBoxIP.ToString());
+            IPEndPoint serverEndPoint = new IPEndPoint(serverIP, sPort);
+
+            socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            socket.Bind(serverEndPoint);
+
+            if (socket.Connected)
+            {
+                labelServerIP.Visible = false;
+                textBoxIP.Visible = false;
+                buttonConnect.Visible = false;
+
+                new Thread(delegate ()
+                {
+                    while (true)
+                    {
+                        string sendstirng = RightCharacter.Location.X + "$" + RightCharacter.Location.Y;
+                        if(sendstring != String.Empty)
+                        {
+                            int getValueLength = 0;
+                            setByte = Encoding.UTF7.GetBytes(sendstring);
+                            socket.Send(setByte, 0, setByte.Length, SocketFlags.None);
+                            socket.Receive(getByte, 0, getByte.Length, SocketFlags.None);
+                            getValueLength = byteArrayDefrag(getByte);
+                            getstring = Encoding.UTF7.GetString(getByte, 0, getValueLength + 1);
+                            string[] result = getstring.Split(new char[] { '$' });
+                            Point lc = new Point();
+                            lc.X = Convert.ToInt32(result[0]);
+                            lc.Y = Convert.ToInt32(result[1]);
+                            LeftCharacter.Location = lc;
+
+                        }
+                        getByte = new byte[1024];
+
+                    }
+                }).Start();
+
+            }
+
+        }
+
+
+        public static int byteArrayDefrag(byte[] sData)
+        {
+            int endLength = 0;
+            for (int i = 0; i < sData.Length; i++)
+            {
+                if ((byte)sData[i] != (byte)0)
+                {
+                    endLength = i;
+                }
+            }
+            return endLength;
+        }
+
+        #endregion
 
     }
 }

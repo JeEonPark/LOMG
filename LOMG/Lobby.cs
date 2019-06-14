@@ -24,6 +24,7 @@ namespace LOMG
         private void button1_Click(object sender, EventArgs e)
         {
             bools b = new bools();
+            b.GSamIServer = true;
             b.GSigOn = true;
 
             InGame dlg = new InGame();
@@ -42,7 +43,24 @@ namespace LOMG
             }
         }
 
+        //X 버튼
+        private void exitButton_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+
         #endregion
 
+        private void Button2_Click(object sender, EventArgs e)
+        {
+            bools b = new bools();
+            b.GSamIServer = false;
+            b.GSigOn = true;
+
+            InGame dlg = new InGame();
+            dlg.Show();
+            this.Close();
+        }
     }
 }

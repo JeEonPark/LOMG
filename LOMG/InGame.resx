@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="pictureBox1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="LeftCharacter.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAEYAAAB4CAYAAABPXoRZAAAABGdBTUEAALGPC/xhBQAAAjJJREFUeF7t
         klFuxCAMBXP/S7dyVaQo4iUYTDC7MxIfDYYdRj0AYBd+Jq2tmfmAbeO8Ib5dnDeFt4mzQnSLOISpYIKr
@@ -277,6 +277,21 @@
         AIBvyW+kR3kdYKBcOBtJIaxPowEA4FvyG+lRXgcYKBfORlII69NoAAAAOF/+17aRFML6NBoAAADOl/+1
         bSSFsD6NBgAAgPPlf20bSSGsT6MBAADgfPlf20ZSCOvTaAAAADhf/te2kRTC6v79z38A3k1GxuAh0gYA
         AAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="RightCharacter.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAAEYAAAB4CAYAAABPXoRZAAAABGdBTUEAALGPC/xhBQAAAjJJREFUeF7t
+        klFuxCAMBXP/S7dyVaQo4iUYTDC7MxIfDYYdRj0AYBd+Jq2tmfmAbeO8Ib5dnDeFt4mzQnSLOISpYIKr
+        wqSOQxgBYQSEuWFVmPQQRkAYAWEEhBEQRkCYG94U3SZK4Q3h7aIUZopvG6Uw4wHbRynYQ9RS1GbL+nju
+        HvkVARSEERCmgj38KczHxCmPaV1P1M7crZRkEEsXJ5NQGpeM/8LLnTJGKSxzyxylsMSRMALCCAgjIIyg
+        9qMrY6XxIYygR8T2y2rBO3ul9WwoXpHr3tNsWa3UZj3nw/CI2HePZJn3nrniOR9Gq4h96xX0nGv1mU6r
+        yIic52z0b3fTKmLfegU951p9puMRse89kp4zHp+peEVszyvqmff6TKNHxPY9sqOznvNhjIhEzxkjPqGM
+        itjs07z3viue82FEiDzNe+6L8AkhQuRp3nNfhE8IESJP8577InxC8Ih4vxc8D/P4TMUjYt9b58usWora
+        3t38NLwitnfev/49Su2uyPub6RGx/fOKpHZf9G80kUbkn1Q+1x/OFGalyx8mcF6ryOJRZXWYtBBGQBgB
+        YQSEERBGQBgBYQSEERBGQBjBiJydHT2fll6587mIO9JBGAFhBIQREEZAGAFhBIQREEZAGAFhBIQREEZA
+        GAFhBIQREEZAGAFhBD1ytTNR96SBMALCCAgjIIyAMALCCAgjIIyAMALCCAgjIIyAMALCCAgjIIyAMAKT
+        61lXajMtCwAAAODLOY5fz0PxHdCWmAUAAAAASUVORK5CYII=
 </value>
   </data>
   <metadata name="timer_gravity.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
