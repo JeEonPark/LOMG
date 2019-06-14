@@ -318,30 +318,33 @@ namespace LOMG
             }
 
 
-                while (true)
+
+            while (true)
+            {
+                sendstring = RightCharacter.Location.X + "$" + RightCharacter.Location.Y;
+                if (sendstring != String.Empty)
                 {
-                    sendstring = RightCharacter.Location.X + "$" + RightCharacter.Location.Y;
-                    if (sendstring != String.Empty)
+                    int getValueLength = 0;
+                    setByte = Encoding.UTF7.GetBytes(sendstring);
+                    socket.Send(setByte, 0, setByte.Length, SocketFlags.None);
+                    socket.Receive(getByte, 0, getByte.Length, SocketFlags.None);
+                    getValueLength = byteArrayDefrag(getByte);
+                    getstring = Encoding.UTF7.GetString(getByte, 0, getValueLength + 1);
+                    string[] result = getstring.Split(new char[] { '$' });
+                    Point lc = new Point();
+                    lc.X = Convert.ToInt32(result[0]);
+                    lc.Y = Convert.ToInt32(result[1]);
+                    LeftCharacter.Invoke((MethodInvoker)delegate ()
                     {
-                        int getValueLength = 0;
-                        setByte = Encoding.UTF7.GetBytes(sendstring);
-                        socket.Send(setByte, 0, setByte.Length, SocketFlags.None);
-                        socket.Receive(getByte, 0, getByte.Length, SocketFlags.None);
-                        getValueLength = byteArrayDefrag(getByte);
-                        getstring = Encoding.UTF7.GetString(getByte, 0, getValueLength + 1);
-                        string[] result = getstring.Split(new char[] { '$' });
-                        Point lc = new Point();
-                        lc.X = Convert.ToInt32(result[0]);
-                        lc.Y = Convert.ToInt32(result[1]);
-                        LeftCharacter.Invoke((MethodInvoker)delegate ()
-                        {
-                            LeftCharacter.Location = lc;
-                        });
+                        LeftCharacter.Location = lc;
+                    });
 
                 }
-                        getByte = new byte[1024];
+                getByte = new byte[1024];
 
-                }
+                Thread.Sleep(100);
+
+            }
 
             
 
