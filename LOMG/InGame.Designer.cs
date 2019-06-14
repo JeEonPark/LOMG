@@ -156,6 +156,8 @@
             this.Text = "Form1";
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.InGame_KeyDown);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.InGame_KeyUp);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.InGame_MouseDown);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.InGame_MouseMove);
             ((System.ComponentModel.ISupportInitialize)(this.LeftCharacter)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.WorldFrame.ResumeLayout(false);
