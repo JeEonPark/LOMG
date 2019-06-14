@@ -55,7 +55,6 @@ namespace LOMG
                 pb = RightCharacter;
                 labelServerIP.Visible = true;
                 buttonConnect.Visible = true;
-                textBoxIP.Visible = true;
                 
             }
 
@@ -290,7 +289,7 @@ namespace LOMG
             string sendstring = null;
             string getstring = null;
 
-            IPAddress serverIP = IPAddress.Parse(textBoxIP.Text);
+            IPAddress serverIP = IPAddress.Parse("25.53.5.184");
             IPEndPoint serverEndPoint = new IPEndPoint(serverIP, sPort);
             Console.WriteLine("asdfsad");
             socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
@@ -305,10 +304,6 @@ namespace LOMG
                     labelClient.Visible = false;
                 });
 
-                textBoxIP.Invoke((MethodInvoker)delegate ()
-                 {
-                    textBoxIP.Visible = false;
-                 });
 
                 buttonConnect.Invoke((MethodInvoker)delegate ()
                  {

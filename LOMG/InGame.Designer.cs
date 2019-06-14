@@ -35,7 +35,6 @@
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.WorldFrame = new System.Windows.Forms.Panel();
             this.buttonConnect = new System.Windows.Forms.Button();
-            this.textBoxIP = new System.Windows.Forms.TextBox();
             this.labelServerIP = new System.Windows.Forms.Label();
             this.labelClient = new System.Windows.Forms.Label();
             this.RightCharacter = new System.Windows.Forms.PictureBox();
@@ -79,7 +78,6 @@
             this.WorldFrame.BackColor = System.Drawing.Color.SkyBlue;
             this.WorldFrame.Controls.Add(this.button1);
             this.WorldFrame.Controls.Add(this.buttonConnect);
-            this.WorldFrame.Controls.Add(this.textBoxIP);
             this.WorldFrame.Controls.Add(this.labelServerIP);
             this.WorldFrame.Controls.Add(this.labelClient);
             this.WorldFrame.Controls.Add(this.RightCharacter);
@@ -99,14 +97,6 @@
             this.buttonConnect.UseVisualStyleBackColor = true;
             this.buttonConnect.Visible = false;
             this.buttonConnect.Click += new System.EventHandler(this.ButtonConnect_Click);
-            // 
-            // textBoxIP
-            // 
-            this.textBoxIP.Location = new System.Drawing.Point(617, 133);
-            this.textBoxIP.Name = "textBoxIP";
-            this.textBoxIP.Size = new System.Drawing.Size(174, 21);
-            this.textBoxIP.TabIndex = 4;
-            this.textBoxIP.Visible = false;
             // 
             // labelServerIP
             // 
@@ -189,7 +179,6 @@
         private System.Windows.Forms.Timer timer_gravity;
         private System.Windows.Forms.PictureBox RightCharacter;
         private System.Windows.Forms.Button buttonConnect;
-        private System.Windows.Forms.TextBox textBoxIP;
         private System.Windows.Forms.Label labelServerIP;
         private System.Windows.Forms.Label labelClient;
         private System.Windows.Forms.Button button1;
