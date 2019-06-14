@@ -155,7 +155,7 @@ namespace LOMG
 
         private void ButtonConnect_Click(object sender, EventArgs e)
         {
-            Thread thread = new Thread(new ThreadStart(ClientStart));
+            Thread thread = new Thread(ClientStart);
             thread.Start();
         }
 
@@ -278,49 +278,48 @@ namespace LOMG
         {
             byte[] getByte = new byte[1024];
             byte[] setByte = new byte[1024];
-            const int sPort = 20000;
+            const int sPort = 23456;
 
             string sendstring = null;
             string getstring = null;
 
             IPAddress serverIP = IPAddress.Parse(textBoxIP.Text);
             IPEndPoint serverEndPoint = new IPEndPoint(serverIP, sPort);
-
+            Console.WriteLine("asdfsad");
             socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            socket.Bind(serverEndPoint);
 
+
+            socket.Connect(serverEndPoint);
             if (socket.Connected)
             {
-                labelServerIP.Visible = false;
-                textBoxIP.Visible = false;
-                buttonConnect.Visible = false;
+                Console.WriteLine("Connected");
+                
+            }
 
-                new Thread(delegate ()
+
+                while (true)
                 {
-                    while (true)
+                    sendstring = RightCharacter.Location.X + "$" + RightCharacter.Location.Y;
+                    if (sendstring != String.Empty)
                     {
-                        sendstring = RightCharacter.Location.X + "$" + RightCharacter.Location.Y;
-                        if(sendstring != String.Empty)
-                        {
-                            int getValueLength = 0;
-                            setByte = Encoding.UTF7.GetBytes(sendstring);
-                            socket.Send(setByte, 0, setByte.Length, SocketFlags.None);
-                            socket.Receive(getByte, 0, getByte.Length, SocketFlags.None);
-                            getValueLength = byteArrayDefrag(getByte);
-                            getstring = Encoding.UTF7.GetString(getByte, 0, getValueLength + 1);
-                            string[] result = getstring.Split(new char[] { '$' });
-                            Point lc = new Point();
-                            lc.X = Convert.ToInt32(result[0]);
-                            lc.Y = Convert.ToInt32(result[1]);
-                            LeftCharacter.Location = lc;
-
-                        }
-                        getByte = new byte[1024];
+                        int getValueLength = 0;
+                        setByte = Encoding.UTF7.GetBytes(sendstring);
+                        socket.Send(setByte, 0, setByte.Length, SocketFlags.None);
+                        socket.Receive(getByte, 0, getByte.Length, SocketFlags.None);
+                        getValueLength = byteArrayDefrag(getByte);
+                        getstring = Encoding.UTF7.GetString(getByte, 0, getValueLength + 1);
+                        string[] result = getstring.Split(new char[] { '$' });
+                        Point lc = new Point();
+                        lc.X = Convert.ToInt32(result[0]);
+                        lc.Y = Convert.ToInt32(result[1]);
+                        LeftCharacter.Location = lc;
 
                     }
-                }).Start();
+                    getByte = new byte[1024];
 
-            }
+                }
+
+            
 
         }
 
