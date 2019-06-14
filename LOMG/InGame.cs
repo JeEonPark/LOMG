@@ -301,7 +301,20 @@ namespace LOMG
             if (socket.Connected)
             {
                 Console.WriteLine("Connected");
-                
+                labelClient.Invoke((MethodInvoker)delegate ()
+                {
+                    labelClient.Visible = false;
+                });
+
+                textBoxIP.Invoke((MethodInvoker)delegate ()
+                 {
+                    textBoxIP.Visible = false;
+                 });
+
+                buttonConnect.Invoke((MethodInvoker)delegate ()
+                 {
+                    buttonConnect.Visible = false;
+                 });
             }
 
 
@@ -320,9 +333,12 @@ namespace LOMG
                         Point lc = new Point();
                         lc.X = Convert.ToInt32(result[0]);
                         lc.Y = Convert.ToInt32(result[1]);
-                        LeftCharacter.Location = lc;
+                        LeftCharacter.Invoke((MethodInvoker)delegate ()
+                        {
+                            LeftCharacter.Location = lc;
+                        });
 
-                        }
+                }
                         getByte = new byte[1024];
 
                 }
