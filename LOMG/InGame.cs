@@ -20,8 +20,13 @@ namespace LOMG
 
         #region Vars
         private int Speed_Movement = 3;
+        int Gravity = 20;
+        int Force = 0;
+
         private bool Player_Left = false;
         private bool Player_Right = false;
+        bool Player_Jump = false;
+
 
         #endregion
 
@@ -67,6 +72,8 @@ namespace LOMG
                 case Keys.Right:
                     Player_Right = false;
                     break;
+                case Keys.Space:
+
             }
         }
 
@@ -75,11 +82,11 @@ namespace LOMG
         #region TimerTicks
         private void timer_moveAndjump_Tick(object sender, EventArgs e)
         {
-            if (Player_Right)
+            if (Player_Right && pictureBox1.Right <= WorldFrame.Width - 3)
             {
                 pictureBox1.Left += Speed_Movement;
             }
-            if (Player_Left)
+            if (Player_Left && pictureBox1.Location.X >= 3)
             {
                 pictureBox1.Left -= Speed_Movement;
             }
