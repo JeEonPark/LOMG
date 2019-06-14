@@ -234,35 +234,34 @@ namespace LOMG
                         labelClient.Visible = false;
                     });
 
-                    new Thread(delegate ()
+
+                    while (true)
                     {
-                        while (true)
+                        Client.Receive(getByte, 0, getByte.Length, SocketFlags.None);
+                        stringbyte = Encoding.UTF7.GetString(getByte);
+                        if (stringbyte != String.Empty)
                         {
-                            Client.Receive(getByte, 0, getByte.Length, SocketFlags.None);
-                            stringbyte = Encoding.UTF7.GetString(getByte);
-                            if (stringbyte != String.Empty)
+                            int getValueLength = 0;
+                            getValueLength = byteArrayDefrag(getByte);
+                            stringbyte = Encoding.UTF7.GetString(getByte, 0, getValueLength + 1);
+                            string[] result = stringbyte.Split(new char[] { '$' });
+                            Point lc = new Point();
+                            lc.X = Convert.ToInt32(result[0]);
+                            lc.Y = Convert.ToInt32(result[1]);
+                            RightCharacter.Invoke((MethodInvoker)delegate ()
                             {
-                                int getValueLength = 0;
-                                getValueLength = byteArrayDefrag(getByte);
-                                stringbyte = Encoding.UTF7.GetString(getByte, 0, getValueLength + 1);
-                                string[] result = stringbyte.Split(new char[] { '$' });
-                                Point lc = new Point();
-                                lc.X = Convert.ToInt32(result[0]);
-                                lc.Y = Convert.ToInt32(result[1]);
-                                RightCharacter.Invoke((MethodInvoker)delegate ()
-                                {
-                                    RightCharacter.Location = lc;
-                                });
+                                RightCharacter.Location = lc;
+                            });
 
-                                string sendData = LeftCharacter.Location.X + "$" + LeftCharacter.Location.Y;
-                                byte[] setsendData = Encoding.UTF7.GetBytes(sendData);
-                                Client.Send(setsendData, 0, setsendData.Length, SocketFlags.None);
-                            }
-                            getByte = new byte[1024];
-                            setByte = new byte[1024];
-
+                            string sendData = LeftCharacter.Location.X + "$" + LeftCharacter.Location.Y;
+                            byte[] setsendData = Encoding.UTF7.GetBytes(sendData);
+                            Client.Send(setsendData, 0, setsendData.Length, SocketFlags.None);
                         }
-                    }).Start();
+                        getByte = new byte[1024];
+                        setByte = new byte[1024];
+
+                    }
+                    
 
                 }
 
