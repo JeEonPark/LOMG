@@ -47,7 +47,8 @@ namespace LOMG
                 pb = LeftCharacter;
                 pb2 = RightCharacter;
                 labelClient.Visible = true;
-                ServerStart();
+                Thread thread = new Thread(new ThreadStart(ServerStart));
+                thread.Start();
             }
             else  //내가 클라이언트일 경우
             {
@@ -56,6 +57,7 @@ namespace LOMG
                 labelServerIP.Visible = true;
                 buttonConnect.Visible = true;
                 textBoxIP.Visible = true;
+                
             }
 
 
@@ -153,7 +155,8 @@ namespace LOMG
 
         private void ButtonConnect_Click(object sender, EventArgs e)
         {
-            ClientStart();
+            Thread thread = new Thread(new ThreadStart(ClientStart));
+            thread.Start();
         }
 
         #endregion
@@ -213,7 +216,7 @@ namespace LOMG
             const int sPort = 20000;
 
             string stringbyte = null;
-            IPAddress serverIP = IPAddress.Parse("172.0.0.1");
+            IPAddress serverIP = IPAddress.Parse("127.0.0.1");
             IPEndPoint serverEndPoint = new IPEndPoint(serverIP, sPort);
             try
             {
@@ -266,8 +269,7 @@ namespace LOMG
             }
             finally
             {
-                Server.Close();
-                Client.Close();
+                
             }
         }
 
@@ -281,7 +283,7 @@ namespace LOMG
             string sendstring = null;
             string getstring = null;
 
-            IPAddress serverIP = IPAddress.Parse("175.195.53.19");
+            IPAddress serverIP = IPAddress.Parse(textBoxIP.Text);
             IPEndPoint serverEndPoint = new IPEndPoint(serverIP, sPort);
 
             socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
@@ -322,7 +324,20 @@ namespace LOMG
 
         }
 
-        
+        private Point mousePoint;
+        private void InGame_MouseDown(object sender, MouseEventArgs e)
+        {
+            mousePoint = new Point(e.X, e.Y);
+        }
+
+        private void InGame_MouseMove(object sender, MouseEventArgs e)
+        {
+            if ((e.Button & MouseButtons.Left) == MouseButtons.Left)
+            {
+                Location = new Point(this.Left - (mousePoint.X - e.X),
+                    this.Top - (mousePoint.Y - e.Y));
+            }
+        }
 
         public static int byteArrayDefrag(byte[] sData)
         {
