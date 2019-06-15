@@ -18,11 +18,22 @@ namespace LOMG
 
 
         #region Vars
+        PictureBox pb;
+        PictureBox pb2;
+
+        bools b;
+
         private int Speed_Movement = 3;
         private int Gravity = 20;
         private int Force = 0;
         private int Speed_Jump = 3;
         private int Speed_Fall = 3;
+        int current_player_X;
+        int current_player_Y;
+        int Q_Attack_Tick = 0;
+        int W_Attack_Tick = 0;
+        int E_Attack_Tick = 0;
+
 
         private bool Player_Left = false;
         private bool Player_Right = false;
@@ -30,9 +41,21 @@ namespace LOMG
         private bool Player_Jumping = false;
         private bool Player_InAir = false;
         bool GameStart = false;
+        bool Player_WatchingLeft = false;
+        bool Can_Q_Attack = true;
+        bool Can_W_Attack = true;
+        bool Can_E_Attack = true;
+        bool Q_Attack = false;
+        bool W_Attack = false;
+        bool E_Attack = false;
+        bool Player_WatchingLeftwhenAttack_Q = true;
+        bool Player_WatchingLeftwhenAttack_W = true;
+        bool Player_WatchingLeftwhenAttack_E = true;
 
-        PictureBox pb;
-        PictureBox pb2;
+
+
+
+
 
 
         #endregion
@@ -41,13 +64,14 @@ namespace LOMG
         {
             InitializeComponent();
 
-            bools b = new bools();
+            b = new bools();
             if (b.GSamIServer) //내가 서버일경우
             {
                 pb = LeftCharacter;
                 pb2 = RightCharacter;
                 labelClient.Visible = true;
                 ServerConnectButton.Visible = true;
+                Player_WatchingLeft = false;
                 
             }
             else  //내가 클라이언트일 경우
@@ -56,8 +80,8 @@ namespace LOMG
                 pb = RightCharacter;
                 labelServerIP.Visible = true;
                 ClientConnectButton.Visible = true;
+                Player_WatchingLeft = true;
             }
-
 
         }
 
@@ -122,10 +146,48 @@ namespace LOMG
             {
                 case Keys.Left:
                     Player_Left = true;
+                    Player_WatchingLeft = true;
                     break;
                 case Keys.Right:
                     Player_Right = true;
+                    Player_WatchingLeft = false;
                     break;
+                case Keys.Space:
+                    if (!Player_Jump && !Player_InAir)
+                    {
+                        pb.Top -= Speed_Jump;
+                        Force = Gravity;
+                        Player_Jump = true;
+                    }
+                    break;
+                case Keys.Q:
+                    if (Can_Q_Attack)
+                    {
+                        current_player_X = pb.Location.X;
+                        current_player_Y = pb.Location.Y;
+
+                        if (Player_WatchingLeft)
+                        {
+                            Q_A_Image.Left = current_player_X-10;
+                            Q_A_Image.Top = current_player_Y + 40;
+                            Q_Attack = true;
+                            Can_Q_Attack = false;
+                            Player_WatchingLeftwhenAttack_Q = true;
+                            Q_A_Image.Visible = true;
+                        }
+                        else
+                        {
+                            Q_A_Image.Left = current_player_X+40;
+                            Q_A_Image.Top = current_player_Y + 40;
+                            Q_Attack = true;
+                            Can_Q_Attack = false;
+                            Player_WatchingLeftwhenAttack_Q = false;
+                            Q_A_Image.Visible = true;
+                        }
+
+                    }
+                    break;
+                
             }
         }
 
@@ -139,15 +201,7 @@ namespace LOMG
                 case Keys.Right:
                     Player_Right = false;
                     break;
-                case Keys.Space:
-                    if (!Player_Jump && !Player_InAir)
-                    {
-                        pb.Top -= Speed_Jump;
-                        Force = Gravity;
-                        Player_Jump = true;
-                    }
-                    break;
-
+                
             }
         }
 
@@ -159,7 +213,7 @@ namespace LOMG
         private void timer_moveAndjump_Tick(object sender, EventArgs e)
         {
             
-            if (Player_Right && pb.Right <= WorldFrame.Width - 3)
+            if (Player_Right && pb.Right <= WorldFrame.Width - 3)//이동
             {
                 pb.Left += Speed_Movement;
             }
@@ -168,7 +222,7 @@ namespace LOMG
                 pb.Left -= Speed_Movement;
             }
 
-            if (Force > 0)
+            if (Force > 0)//중력
             {
                 Force--;
                 pb.Top -= Speed_Jump;
@@ -178,11 +232,43 @@ namespace LOMG
                 Player_Jump = false;
             }
 
+            if (b.GSamIServer)//포탑이나 넥서스 근처일 시 속도 줄이기
+            {
+                if(LeftCharacter.Location.X > 895 && LeftCharacter.Location.X < 1205)
+                {
+                    Speed_Movement = 1;
+                }
+                else if (LeftCharacter.Location.X > 1205)
+                {
+                    Speed_Movement = 1;
+                }
+                else
+                {
+                    Speed_Movement = 3;
+                }
+                
+            }
+            else
+            {
+                if (RightCharacter.Location.X < 525 && LeftCharacter.Location.X > 215)
+                {
+                    Speed_Movement = 1;
+                }
+                else if (LeftCharacter.Location.X < 215)
+                {
+                    Speed_Movement = 1;
+                }
+                else
+                {
+                    Speed_Movement = 3;
+                }
+            }
+
         }
 
         private void Timer_gravity_Tick(object sender, EventArgs e)
         {
-            if (pb.Location.Y < 261)
+            if (pb.Location.Y < 300)
             {
                 Player_InAir = true;
             }
@@ -191,12 +277,59 @@ namespace LOMG
                 Player_InAir = false;
             }
 
-            if (!Player_Jump && pb.Location.Y < 261 && Player_InAir)
+            if (!Player_Jump && pb.Location.Y < 300 && Player_InAir)
             {
                 pb.Top += Speed_Fall;
             }
 
         }
+
+        private void Testtick_Tick(object sender, EventArgs e)
+        {
+            Console.WriteLine("tick");
+
+        }
+
+        
+        private void Timer_attack_Tick(object sender, EventArgs e)
+        {
+            if (Q_Attack)
+            {
+                if (Player_WatchingLeftwhenAttack_Q)//Tick 20일경우 없앰
+                {
+                    Q_A_Image.Left -= 5;
+
+                    Q_Attack_Tick++;
+
+                    if(Q_Attack_Tick == 20)
+                    {
+                        Q_Attack = false;
+                        Q_A_Image.Top = 50;
+                        Q_A_Image.Left = 50;
+                        Q_A_Image.Visible = false;
+                        Can_Q_Attack = true;
+                        Q_Attack_Tick = 0;
+                    }
+                }
+                else
+                {
+                    Q_A_Image.Left += 5;
+
+                    Q_Attack_Tick++;
+
+                    if (Q_Attack_Tick == 20)
+                    {
+                        Q_Attack = false;
+                        Q_A_Image.Top = 50;
+                        Q_A_Image.Left = 50;
+                        Q_A_Image.Visible = false;
+                        Can_Q_Attack = true;
+                        Q_Attack_Tick = 0;
+                    }
+                }
+            }
+        }
+
 
         #endregion
 
@@ -372,12 +505,6 @@ namespace LOMG
         }
 
        
-
-        private void Testtick_Tick(object sender, EventArgs e)
-        {
-            Console.WriteLine("tick");
-            
-        }
 
         
 
