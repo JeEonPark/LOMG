@@ -58,6 +58,47 @@ namespace LOMG
             this.Close();
         }
 
+        private void Button2_Click(object sender, EventArgs e)
+        {
+            bools b = new bools();
+            b.GSamIServer = true;
+            b.GSigOn = true;
+
+            GameInformation gi = new GameInformation();
+            if (radioButton1.Checked == true)
+            {
+                gi.GSChampion = 1;
+            }
+            else if (radioButton2.Checked == true)
+            {
+                gi.GSChampion = 2;
+            }
+            else if (radioButton3.Checked == true)
+            {
+                gi.GSChampion = 3;
+            }
+            else if (radioButton4.Checked == true)
+            {
+                gi.GSChampion = 4;
+            }
+            else if (radioButton5.Checked == true)
+            {
+                gi.GSChampion = 5;
+            }
+            else if (radioButton6.Checked == true)
+            {
+                gi.GSChampion = 6;
+            }
+
+            bools b = new bools();
+            b.GSamIServer = false;
+            b.GSigOn = true;
+
+            InGame dlg = new InGame();
+            dlg.Show();
+            this.Close();
+        }
+
 
         //창 끌고 이동
         private void form_MouseMove(object sender, MouseEventArgs e)
@@ -78,15 +119,6 @@ namespace LOMG
 
         #endregion
 
-        private void Button2_Click(object sender, EventArgs e)
-        {
-            bools b = new bools();
-            b.GSamIServer = false;
-            b.GSigOn = true;
-
-            InGame dlg = new InGame();
-            dlg.Show();
-            this.Close();
-        }
+        
     }
 }
