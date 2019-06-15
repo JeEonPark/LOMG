@@ -275,6 +275,13 @@
         AAAASUVORK5CYII=
 </value>
   </data>
+  <data name="Enemy_Q_A_Image.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAABGdBTUEAALGPC/xhBQAAADRJREFUKFN1
+        ykEKADAIxED//+kWhYLKNJDLbmJxlmRHz4GCbqFDcpQcJUdZ6OgOFKTkE0VcMrRLtap7BH4AAAAASUVO
+        RK5CYII=
+</value>
+  </data>
   <data name="Q_A_Image.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAABGdBTUEAALGPC/xhBQAAADRJREFUKFN1

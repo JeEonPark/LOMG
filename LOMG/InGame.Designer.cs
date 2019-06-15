@@ -47,6 +47,7 @@
             this.timer_gravity = new System.Windows.Forms.Timer(this.components);
             this.testtick = new System.Windows.Forms.Timer(this.components);
             this.timer_attack = new System.Windows.Forms.Timer(this.components);
+            this.Enemy_Q_A_Image = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.LeftCharacter)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.WorldFrame.SuspendLayout();
@@ -56,6 +57,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.leftPortop)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Enemy_Q_A_Image)).BeginInit();
             this.SuspendLayout();
             // 
             // LeftCharacter
@@ -89,6 +91,7 @@
             // WorldFrame
             // 
             this.WorldFrame.BackColor = System.Drawing.Color.SkyBlue;
+            this.WorldFrame.Controls.Add(this.Enemy_Q_A_Image);
             this.WorldFrame.Controls.Add(this.Q_A_Image);
             this.WorldFrame.Controls.Add(this.RightCharacter);
             this.WorldFrame.Controls.Add(this.LeftCharacter);
@@ -233,6 +236,17 @@
             this.timer_attack.Interval = 1;
             this.timer_attack.Tick += new System.EventHandler(this.Timer_attack_Tick);
             // 
+            // Enemy_Q_A_Image
+            // 
+            this.Enemy_Q_A_Image.Image = ((System.Drawing.Image)(resources.GetObject("Enemy_Q_A_Image.Image")));
+            this.Enemy_Q_A_Image.Location = new System.Drawing.Point(90, 50);
+            this.Enemy_Q_A_Image.Name = "Enemy_Q_A_Image";
+            this.Enemy_Q_A_Image.Size = new System.Drawing.Size(10, 10);
+            this.Enemy_Q_A_Image.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.Enemy_Q_A_Image.TabIndex = 11;
+            this.Enemy_Q_A_Image.TabStop = false;
+            this.Enemy_Q_A_Image.Visible = false;
+            // 
             // InGame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -257,6 +271,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.leftPortop)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Enemy_Q_A_Image)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -281,6 +296,7 @@
         private System.Windows.Forms.PictureBox leftPortop;
         private System.Windows.Forms.Timer timer_attack;
         private System.Windows.Forms.PictureBox Q_A_Image;
+        private System.Windows.Forms.PictureBox Enemy_Q_A_Image;
     }
 }
 

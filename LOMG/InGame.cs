@@ -350,6 +350,21 @@ namespace LOMG
 
 
         }
+
+        private Point mousePoint;
+        private void InGame_MouseDown(object sender, MouseEventArgs e)
+        {
+            mousePoint = new Point(e.X, e.Y);
+        }
+
+        private void InGame_MouseMove(object sender, MouseEventArgs e)
+        {
+            if ((e.Button & MouseButtons.Left) == MouseButtons.Left)
+            {
+                Location = new Point(this.Left - (mousePoint.X - e.X),
+                    this.Top - (mousePoint.Y - e.Y));
+            }
+        }
         #endregion
 
         Socket Server, Client;
@@ -392,15 +407,47 @@ namespace LOMG
                             getValueLength = byteArrayDefrag(getByte);
                             stringbyte = Encoding.UTF7.GetString(getByte, 0, getValueLength + 1);
                             string[] result = stringbyte.Split(new char[] { '$' });
+                            #region Receive Result
+
+                            /*
+                             * Thread 에서 Form 접근할 시
+                             .Invoke((MethodInvoker)delegate ()
+                            {
+                                //할거
+                            });
+                            */
+
+
+                            //상대 위치 이동하여 이동
                             Point lc = new Point();
                             lc.X = Convert.ToInt32(result[0]);
                             lc.Y = Convert.ToInt32(result[1]);
-                            RightCharacter.Invoke((MethodInvoker)delegate ()
+                            LeftCharacter.Invoke((MethodInvoker)delegate ()
                             {
-                                RightCharacter.Location = lc;
+                                LeftCharacter.Location = lc;
                             });
 
-                            string sendData = LeftCharacter.Location.X + "$" + LeftCharacter.Location.Y;
+                            //상대 Q스킬 이미지 위치 및 Visible
+                            bool v = Convert.ToBoolean(result[14]);
+                            Enemy_Q_A_Image.Invoke((MethodInvoker)delegate ()
+                            {
+                                //할거
+                                Enemy_Q_A_Image.Visible = v;
+                            });
+                            Point eqai = new Point();
+                            eqai.X = Convert.ToInt32(result[12]);
+                            eqai.Y = Convert.ToInt32(result[13]);
+                            Enemy_Q_A_Image.Invoke((MethodInvoker)delegate ()
+                            {
+                                //할거
+                                Enemy_Q_A_Image.Location = eqai;
+                            });
+
+                            #endregion
+
+                            string sendData = RightCharacter.Location.X + "$" + RightCharacter.Location.Y + "$" + "2" + "$" + "3" + "$" +
+                    "4" + "$" + "5" + "$" + "6" + "$" + "7" + "$" + "8" + "$" + "9" + "$" + "10" + "$" + "11" + "$" + Q_A_Image.Location.X
+                     + "$" + Q_A_Image.Location.Y + "$" + Q_A_Image.Visible;
                             byte[] setsendData = Encoding.UTF7.GetBytes(sendData);
                             Client.Send(setsendData, 0, setsendData.Length, SocketFlags.None);
                         }
@@ -456,11 +503,11 @@ namespace LOMG
                 
             }
 
-
-
             while (true)
             {
-                sendstring = RightCharacter.Location.X + "$" + RightCharacter.Location.Y;
+                sendstring = RightCharacter.Location.X + "$" + RightCharacter.Location.Y + "$" + "2" + "$" + "3" + "$" +
+                    "4" + "$" + "5" + "$" + "6" + "$" + "7" + "$" + "8" + "$" + "9" + "$" + "10" + "$" + "11" + "$" + Q_A_Image.Location.X
+                     + "$" + Q_A_Image.Location.Y + "$" + Q_A_Image.Visible;
                 if (sendstring != String.Empty)
                 {
                     int getValueLength = 0;
@@ -470,6 +517,19 @@ namespace LOMG
                     getValueLength = byteArrayDefrag(getByte);
                     getstring = Encoding.UTF7.GetString(getByte, 0, getValueLength + 1);
                     string[] result = getstring.Split(new char[] { '$' });
+
+                    #region Receive Result
+
+                    /*
+                     * Thread 에서 Form 접근할 시
+                     .Invoke((MethodInvoker)delegate ()
+                    {
+                        //할거
+                    });
+                    */
+
+
+                    //상대 위치 이동하여 이동
                     Point lc = new Point();
                     lc.X = Convert.ToInt32(result[0]);
                     lc.Y = Convert.ToInt32(result[1]);
@@ -477,6 +537,24 @@ namespace LOMG
                     {
                         LeftCharacter.Location = lc;
                     });
+
+                    //상대 Q스킬 이미지 위치 및 Visible
+                    bool v = Convert.ToBoolean(result[14]);
+                    Enemy_Q_A_Image.Invoke((MethodInvoker)delegate ()
+                     {
+                         //할거
+                         Enemy_Q_A_Image.Visible = v;
+                     });
+                    Point eqai = new Point();
+                    eqai.X = Convert.ToInt32(result[12]);
+                    eqai.Y = Convert.ToInt32(result[13]);
+                    Enemy_Q_A_Image.Invoke((MethodInvoker)delegate ()
+                     {
+                         //할거
+                         Enemy_Q_A_Image.Location = eqai;
+                     });
+
+                    #endregion
 
                 }
                 getByte = new byte[1024];
@@ -489,24 +567,6 @@ namespace LOMG
 
         }
 
-        private Point mousePoint;
-        private void InGame_MouseDown(object sender, MouseEventArgs e)
-        {
-            mousePoint = new Point(e.X, e.Y);
-        }
-
-        private void InGame_MouseMove(object sender, MouseEventArgs e)
-        {
-            if ((e.Button & MouseButtons.Left) == MouseButtons.Left)
-            {
-                Location = new Point(this.Left - (mousePoint.X - e.X),
-                    this.Top - (mousePoint.Y - e.Y));
-            }
-        }
-
-       
-
-        
 
         public static int byteArrayDefrag(byte[] sData)
         {
