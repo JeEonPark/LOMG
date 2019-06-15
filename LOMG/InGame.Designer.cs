@@ -34,6 +34,11 @@
             this.timer_moveAndjump = new System.Windows.Forms.Timer(this.components);
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.WorldFrame = new System.Windows.Forms.Panel();
+            this.right_Level = new System.Windows.Forms.Label();
+            this.left_Level = new System.Windows.Forms.Label();
+            this.rightHPBar = new System.Windows.Forms.ProgressBar();
+            this.leftHPBar = new System.Windows.Forms.ProgressBar();
+            this.Enemy_Q_A_Image = new System.Windows.Forms.PictureBox();
             this.Q_A_Image = new System.Windows.Forms.PictureBox();
             this.RightCharacter = new System.Windows.Forms.PictureBox();
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
@@ -47,17 +52,23 @@
             this.timer_gravity = new System.Windows.Forms.Timer(this.components);
             this.testtick = new System.Windows.Forms.Timer(this.components);
             this.timer_attack = new System.Windows.Forms.Timer(this.components);
-            this.Enemy_Q_A_Image = new System.Windows.Forms.PictureBox();
+            this.myExpBar = new System.Windows.Forms.ProgressBar();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.label2 = new System.Windows.Forms.Label();
+            this.myLevel = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.timer_HP_Exp = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.LeftCharacter)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.WorldFrame.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Enemy_Q_A_Image)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Q_A_Image)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.RightCharacter)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.leftPortop)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Enemy_Q_A_Image)).BeginInit();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // LeftCharacter
@@ -91,6 +102,10 @@
             // WorldFrame
             // 
             this.WorldFrame.BackColor = System.Drawing.Color.SkyBlue;
+            this.WorldFrame.Controls.Add(this.right_Level);
+            this.WorldFrame.Controls.Add(this.left_Level);
+            this.WorldFrame.Controls.Add(this.rightHPBar);
+            this.WorldFrame.Controls.Add(this.leftHPBar);
             this.WorldFrame.Controls.Add(this.Enemy_Q_A_Image);
             this.WorldFrame.Controls.Add(this.Q_A_Image);
             this.WorldFrame.Controls.Add(this.RightCharacter);
@@ -107,6 +122,50 @@
             this.WorldFrame.Name = "WorldFrame";
             this.WorldFrame.Size = new System.Drawing.Size(1404, 381);
             this.WorldFrame.TabIndex = 4;
+            // 
+            // right_Level
+            // 
+            this.right_Level.AutoSize = true;
+            this.right_Level.Location = new System.Drawing.Point(1258, 276);
+            this.right_Level.Name = "right_Level";
+            this.right_Level.Size = new System.Drawing.Size(49, 12);
+            this.right_Level.TabIndex = 15;
+            this.right_Level.Text = "level : 1";
+            // 
+            // left_Level
+            // 
+            this.left_Level.AutoSize = true;
+            this.left_Level.Location = new System.Drawing.Point(96, 275);
+            this.left_Level.Name = "left_Level";
+            this.left_Level.Size = new System.Drawing.Size(49, 12);
+            this.left_Level.TabIndex = 14;
+            this.left_Level.Text = "level : 1";
+            // 
+            // rightHPBar
+            // 
+            this.rightHPBar.Location = new System.Drawing.Point(1257, 290);
+            this.rightHPBar.Name = "rightHPBar";
+            this.rightHPBar.Size = new System.Drawing.Size(49, 10);
+            this.rightHPBar.TabIndex = 13;
+            // 
+            // leftHPBar
+            // 
+            this.leftHPBar.Location = new System.Drawing.Point(95, 290);
+            this.leftHPBar.Name = "leftHPBar";
+            this.leftHPBar.Size = new System.Drawing.Size(49, 10);
+            this.leftHPBar.TabIndex = 12;
+            this.leftHPBar.Value = 100;
+            // 
+            // Enemy_Q_A_Image
+            // 
+            this.Enemy_Q_A_Image.Image = ((System.Drawing.Image)(resources.GetObject("Enemy_Q_A_Image.Image")));
+            this.Enemy_Q_A_Image.Location = new System.Drawing.Point(90, 50);
+            this.Enemy_Q_A_Image.Name = "Enemy_Q_A_Image";
+            this.Enemy_Q_A_Image.Size = new System.Drawing.Size(10, 10);
+            this.Enemy_Q_A_Image.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.Enemy_Q_A_Image.TabIndex = 11;
+            this.Enemy_Q_A_Image.TabStop = false;
+            this.Enemy_Q_A_Image.Visible = false;
             // 
             // Q_A_Image
             // 
@@ -236,22 +295,68 @@
             this.timer_attack.Interval = 1;
             this.timer_attack.Tick += new System.EventHandler(this.Timer_attack_Tick);
             // 
-            // Enemy_Q_A_Image
+            // myExpBar
             // 
-            this.Enemy_Q_A_Image.Image = ((System.Drawing.Image)(resources.GetObject("Enemy_Q_A_Image.Image")));
-            this.Enemy_Q_A_Image.Location = new System.Drawing.Point(90, 50);
-            this.Enemy_Q_A_Image.Name = "Enemy_Q_A_Image";
-            this.Enemy_Q_A_Image.Size = new System.Drawing.Size(10, 10);
-            this.Enemy_Q_A_Image.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.Enemy_Q_A_Image.TabIndex = 11;
-            this.Enemy_Q_A_Image.TabStop = false;
-            this.Enemy_Q_A_Image.Visible = false;
+            this.myExpBar.BackColor = System.Drawing.SystemColors.Control;
+            this.myExpBar.Location = new System.Drawing.Point(122, 58);
+            this.myExpBar.Maximum = 99;
+            this.myExpBar.Name = "myExpBar";
+            this.myExpBar.Size = new System.Drawing.Size(335, 23);
+            this.myExpBar.TabIndex = 5;
+            // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.Color.Gray;
+            this.panel1.Controls.Add(this.label2);
+            this.panel1.Controls.Add(this.myLevel);
+            this.panel1.Controls.Add(this.label1);
+            this.panel1.Controls.Add(this.myExpBar);
+            this.panel1.Location = new System.Drawing.Point(461, 386);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(478, 100);
+            this.panel1.TabIndex = 6;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(22, 64);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(29, 12);
+            this.label2.TabIndex = 8;
+            this.label2.Text = "레벨";
+            // 
+            // myLevel
+            // 
+            this.myLevel.AutoSize = true;
+            this.myLevel.Font = new System.Drawing.Font("굴림", 30F, System.Drawing.FontStyle.Bold);
+            this.myLevel.Location = new System.Drawing.Point(16, 20);
+            this.myLevel.Name = "myLevel";
+            this.myLevel.Size = new System.Drawing.Size(41, 40);
+            this.myLevel.TabIndex = 7;
+            this.myLevel.Text = "1";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("굴림", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label1.Location = new System.Drawing.Point(62, 64);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(54, 12);
+            this.label1.TabIndex = 6;
+            this.label1.Text = "경험치 :";
+            // 
+            // timer_HP_Exp
+            // 
+            this.timer_HP_Exp.Enabled = true;
+            this.timer_HP_Exp.Interval = 1;
+            this.timer_HP_Exp.Tick += new System.EventHandler(this.Timer_HP_Exp_Tick);
             // 
             // InGame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1400, 480);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.WorldFrame);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -265,13 +370,15 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.WorldFrame.ResumeLayout(false);
             this.WorldFrame.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Enemy_Q_A_Image)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Q_A_Image)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.RightCharacter)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.leftPortop)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Enemy_Q_A_Image)).EndInit();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -297,6 +404,16 @@
         private System.Windows.Forms.Timer timer_attack;
         private System.Windows.Forms.PictureBox Q_A_Image;
         private System.Windows.Forms.PictureBox Enemy_Q_A_Image;
+        private System.Windows.Forms.ProgressBar myExpBar;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label myLevel;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ProgressBar rightHPBar;
+        private System.Windows.Forms.ProgressBar leftHPBar;
+        private System.Windows.Forms.Label right_Level;
+        private System.Windows.Forms.Label left_Level;
+        private System.Windows.Forms.Timer timer_HP_Exp;
     }
 }
 

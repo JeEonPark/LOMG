@@ -21,7 +21,19 @@ namespace LOMG
         PictureBox pb;
         PictureBox pb2;
 
+        ProgressBar pr;
+        ProgressBar pr2;
+
+        Label ll;
+        Label ll2;
+
         bools b;
+        GameInformation gi;
+
+        Bandit1 b1;
+
+        dynamic c;
+
 
         private int Speed_Movement = 3;
         private int Gravity = 20;
@@ -65,10 +77,16 @@ namespace LOMG
             InitializeComponent();
 
             b = new bools();
+            gi = new GameInformation();
+
             if (b.GSamIServer) //내가 서버일경우
             {
                 pb = LeftCharacter;
                 pb2 = RightCharacter;
+                pr = leftHPBar;
+                pr2 = rightHPBar;
+                ll = left_Level;
+                ll2 = right_Level;
                 labelClient.Visible = true;
                 ServerConnectButton.Visible = true;
                 Player_WatchingLeft = false;
@@ -78,9 +96,40 @@ namespace LOMG
             {
                 pb2 = LeftCharacter;
                 pb = RightCharacter;
+                pr2 = leftHPBar;
+                pr = rightHPBar;
+                ll2 = left_Level;
+                ll = right_Level;
                 labelServerIP.Visible = true;
                 ClientConnectButton.Visible = true;
                 Player_WatchingLeft = true;
+            }
+
+            if(gi.GSChampion == 1)
+            {
+                //궁수1
+            }
+            else if(gi.GSChampion == 2)
+            {
+                //궁수 2
+            }
+            else if (gi.GSChampion == 3)
+            {
+                //마법사 1
+            }
+            else if (gi.GSChampion == 4)
+            {
+                //마법사 2
+            }
+            else if (gi.GSChampion == 5)
+            {
+                //도적 1
+                b1 = new Bandit1();
+                c = b1;
+            }
+            else if (gi.GSChampion == 6)
+            {
+                //도적 2
             }
 
         }
@@ -264,6 +313,16 @@ namespace LOMG
                 }
             }
 
+            //progress bar 와 level 라벨 움직임
+            Point p = new Point();
+            p.X = pb.Location.X - 5;
+            p.Y = pb.Location.Y - 10;
+            pr.Location = p;
+
+            p.X = pb.Location.X - 4;
+            p.Y = pb.Location.Y - 25;
+            ll.Location = p;
+
         }
 
         private void Timer_gravity_Tick(object sender, EventArgs e)
@@ -289,8 +348,6 @@ namespace LOMG
             Console.WriteLine("tick");
 
         }
-
-        
         private void Timer_attack_Tick(object sender, EventArgs e)
         {
             if (Q_Attack)
@@ -330,6 +387,27 @@ namespace LOMG
             }
         }
 
+        private void Timer_HP_Exp_Tick(object sender, EventArgs e)
+        {
+            //내꺼
+            c.CheckLevel();
+            pr.Maximum = c.GSmaxHp;
+            pr.Value = c.GShp;
+            if (c.GSlevel == 1)
+            {
+                myExpBar.Minimum = 0;
+                myExpBar.Maximum = 99;
+            }
+            else
+            {
+                myExpBar.Minimum = (myExpBar.Minimum) + (100 + (c.GSlevel - 2) * 20);
+                myExpBar.Maximum = (myExpBar.Maximum + 1) + (100 + (c.GSlevel - 1) * 20) - 1;
+            }
+            myLevel.Text = c.GSlevel.ToString();
+            myExpBar.Value = c.GSexp;
+            
+        }
+
 
         #endregion
 
@@ -365,6 +443,7 @@ namespace LOMG
                     this.Top - (mousePoint.Y - e.Y));
             }
         }
+
         #endregion
 
         Socket Server, Client;
@@ -443,11 +522,23 @@ namespace LOMG
                                 Enemy_Q_A_Image.Location = eqai;
                             });
 
+                            //상대 체력 동기화
+                            rightHPBar.Invoke((MethodInvoker)delegate ()
+                             {
+                                 //할거
+                                 rightHPBar.Maximum = Convert.ToInt32(result[28]);
+                                 rightHPBar.Value = Convert.ToInt32(result[4]);
+                                 
+                             });
+
+
                             #endregion
 
-                            string sendData = LeftCharacter.Location.X + "$" + LeftCharacter.Location.Y + "$" + "2" + "$" + "3" + "$" +
+                            string sendData = LeftCharacter.Location.X + "$" + LeftCharacter.Location.Y + "$" + leftHPBar.Value + "$" + rightHPBar.Value + "$" +
                     "4" + "$" + "5" + "$" + "6" + "$" + "7" + "$" + "8" + "$" + "9" + "$" + "10" + "$" + "11" + "$" + Q_A_Image.Location.X
-                     + "$" + Q_A_Image.Location.Y + "$" + Q_A_Image.Visible;
+                     + "$" + Q_A_Image.Location.Y + "$" + Q_A_Image.Visible + "$" + "15" + "$" + "16" + "$" + "17" + "$" + "18" + "$" + "19" + "$"
+                      + "$" + "20" + "$" + "21" + "$" + "22" + "$" + "23" + "$" + "24" + "$" + "25" + "$" + "26" + "$" + leftHPBar.Maximum + "$" +
+                      rightHPBar.Maximum; ;
                             byte[] setsendData = Encoding.UTF7.GetBytes(sendData);
                             Client.Send(setsendData, 0, setsendData.Length, SocketFlags.None);
                         }
@@ -505,9 +596,11 @@ namespace LOMG
 
             while (true)
             {
-                sendstring = RightCharacter.Location.X + "$" + RightCharacter.Location.Y + "$" + "2" + "$" + "3" + "$" +
+                sendstring = RightCharacter.Location.X + "$" + RightCharacter.Location.Y + "$" + leftHPBar.Value + "$" + rightHPBar.Value + "$" +
                     "4" + "$" + "5" + "$" + "6" + "$" + "7" + "$" + "8" + "$" + "9" + "$" + "10" + "$" + "11" + "$" + Q_A_Image.Location.X
-                     + "$" + Q_A_Image.Location.Y + "$" + Q_A_Image.Visible;
+                     + "$" + Q_A_Image.Location.Y + "$" + Q_A_Image.Visible + "$" + "15" + "$" + "16" + "$" + "17" + "$" + "18" + "$" + "19" + "$"
+                      + "$" + "20" + "$" + "21" + "$" + "22" + "$" + "23" + "$" + "24" + "$" + "25" + "$" + "26" + "$" + leftHPBar.Maximum + "$" + 
+                      rightHPBar.Maximum;
                 if (sendstring != String.Empty)
                 {
                     int getValueLength = 0;
@@ -553,6 +646,14 @@ namespace LOMG
                          //할거
                          Enemy_Q_A_Image.Location = eqai;
                      });
+
+                    //상대 체력 동기화
+                    leftHPBar.Invoke((MethodInvoker)delegate ()
+                    {
+                        //할거
+                        rightHPBar.Maximum = Convert.ToInt32(result[27]);
+                        leftHPBar.Value = Convert.ToInt32(result[3]);
+                    });
 
                     #endregion
 
