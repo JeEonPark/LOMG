@@ -422,9 +422,9 @@ namespace LOMG
                             Point lc = new Point();
                             lc.X = Convert.ToInt32(result[0]);
                             lc.Y = Convert.ToInt32(result[1]);
-                            LeftCharacter.Invoke((MethodInvoker)delegate ()
+                            RightCharacter.Invoke((MethodInvoker)delegate ()
                             {
-                                LeftCharacter.Location = lc;
+                                RightCharacter.Location = lc;
                             });
 
                             //상대 Q스킬 이미지 위치 및 Visible
