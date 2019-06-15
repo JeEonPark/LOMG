@@ -61,7 +61,7 @@ namespace LOMG
         private void Button2_Click(object sender, EventArgs e)
         {
             bools b = new bools();
-            b.GSamIServer = true;
+            b.GSamIServer = false;
             b.GSigOn = true;
 
             GameInformation gi = new GameInformation();
@@ -89,10 +89,6 @@ namespace LOMG
             {
                 gi.GSChampion = 6;
             }
-
-            bools b = new bools();
-            b.GSamIServer = false;
-            b.GSigOn = true;
 
             InGame dlg = new InGame();
             dlg.Show();
