@@ -445,7 +445,7 @@ namespace LOMG
 
                             #endregion
 
-                            string sendData = RightCharacter.Location.X + "$" + RightCharacter.Location.Y + "$" + "2" + "$" + "3" + "$" +
+                            string sendData = LeftCharacter.Location.X + "$" + LeftCharacter.Location.Y + "$" + "2" + "$" + "3" + "$" +
                     "4" + "$" + "5" + "$" + "6" + "$" + "7" + "$" + "8" + "$" + "9" + "$" + "10" + "$" + "11" + "$" + Q_A_Image.Location.X
                      + "$" + Q_A_Image.Location.Y + "$" + Q_A_Image.Visible;
                             byte[] setsendData = Encoding.UTF7.GetBytes(sendData);
